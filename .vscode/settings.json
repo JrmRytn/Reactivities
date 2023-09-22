@@ -1,0 +1,4 @@
+{
+    "js/ts.implicitProjectConfig.checkJs": false,
+    "typescript.validate.enable": true
+}
