@@ -36,6 +36,8 @@ const Activities = {
     delete: (id: string) => axios.delete<void>(`/activities/${id}`)
 }
 
+
+
 const agent = {
     Activities
 }
