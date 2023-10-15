@@ -39,10 +39,9 @@ namespace Application.Activities
                 
                 if(activity == null) return null;
 
-                _mapper.Map(request.Activity,activity);
-                activity.Title = request.Activity.Title ?? activity.Title;
+                _mapper.Map(request.Activity,activity); 
                 
-                var result = await _context.SaveChangesAsync() > 0;
+                var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if(!result) return Result<Unit>.Failure("Failed to update activity.");
 

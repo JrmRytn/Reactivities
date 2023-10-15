@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { Activity } from "../models/activity";
 import agent from "../api/agent";
 import {v4 as uuid} from 'uuid';
+import { format } from "date-fns";
 
 export default class ActivityStore { 
     activities: Activity [] = [];
@@ -17,13 +18,13 @@ export default class ActivityStore {
 
     get activitiesByDate() {
         return Array.from(this.activityRegistry.values()).sort((a,b) => 
-        Date.parse(a.date) - Date.parse(b.date));
+        a.date!.getTime() -  b.date!.getTime());
     }
 
     get groupActivities() { 
         return Object.entries(
             this.activitiesByDate.reduce((activities, activity) => {
-                const date = activity.date;
+                const date = format(activity.date!,'dd MMM yyy')
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity]
                 return activities;
             }, {} as {[key: string]: Activity[]})
@@ -66,7 +67,7 @@ export default class ActivityStore {
     }
     
     private setActivity =  (activity: Activity) => {
-        activity.date = activity.date.split('T')[0];
+        activity.date = new Date(activity.date!)
         this.activityRegistry.set(activity.id,activity);
     }
     
@@ -112,23 +113,25 @@ export default class ActivityStore {
             })
         }
     }
+
     updateActivity = async (activity: Activity) => {
         this.loading = true;
         try {
-            await agent.Activities.update(activity);
+            await agent.Activities.update(activity); 
             runInAction(() => {
                 this.activityRegistry.set(activity.id,activity);
                 this.selectedActivity = activity;
                 this.editMode = false;
                 this.loading = false;
             })
-        } catch (error) {
+        } catch (error) { 
             console.log(error);
             runInAction(() => {
                 this.loading = false;
             })
         }
     }
+
     deleteActivity = async (id: string) => {
         this.loading = true;
         try {
