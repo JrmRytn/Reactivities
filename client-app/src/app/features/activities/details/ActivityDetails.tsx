@@ -8,6 +8,7 @@ import ActivityDetailedHeader from "./ActivityDetailedHeader";
 import ActivityDetailedInfo from "./ActivityDetailedInfo";
 import ActivityDetailedChat from "./ActivityDetailedChat";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
+import { act } from "react-dom/test-utils";
 
 
 export default observer (function ActivityDetails() {
@@ -29,7 +30,7 @@ export default observer (function ActivityDetails() {
                 <ActivityDetailedChat/>
             </Grid.Column>
             <Grid.Column width={6}>
-                <ActivityDetailedSidebar/>
+                <ActivityDetailedSidebar activity={activity}/>
             </Grid.Column>
         </Grid>
     )
