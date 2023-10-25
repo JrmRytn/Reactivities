@@ -2,6 +2,13 @@ using Application.Profiles;
 
 namespace Application.Activities
 {
+    public class AttendeeDto 
+    {
+        public string Username { get; set; }
+        public string DisplayName { get; set; }
+        public string Bio { get; set; }
+        public string Image { get; set; }  
+    }
     public class ActivityDto
     {
         public Guid Id { get; set; }
@@ -13,6 +20,6 @@ namespace Application.Activities
         public string Venue { get; set; }
         public string HostUsername { get; set; }
         public bool IsCancelled { get; set; } 
-        public ICollection<Profile> Profiles { get; set; }
+        public ICollection<AttendeeDto> Profiles { get; set; }
     }
 }
