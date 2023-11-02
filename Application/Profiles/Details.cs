@@ -16,7 +16,7 @@ namespace Application.Profiles
         public class Handler : IRequestHandler<Query, Result<Profile>>
         {
             private readonly DataContext _context;
-            private IMapper _mapper;
+            private readonly IMapper _mapper;
 
             public Handler(DataContext context, IMapper mapper)
             {
